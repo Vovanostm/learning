@@ -1,0 +1,57 @@
+mixin switcher(name, id, text)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        div.switcher_container
+            label(for=id).mdl-switch.mdl-js-switch.mdl-js-ripple-effect
+                input(id=id, type='checkbox').mdl-switch__input
+                span(id=id+'_label').mdl-switch__label=text
+
+mixin range(name, id, min, max, val, step, metric)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        div.range_container
+            input(id=id, type="range" min=min max=max value=val step=step data-metric=metric).mdl-slider.mdl-js-slider
+
+mixin ust(name, id, pic, sw_id,  sw_text)
+    div.pribor
+        h2(id=id)=name
+        div.big_pic
+            h5 Схема
+            img(src=pic alt="Схема")
+            div.mdl-card__actions.mdl-card--border
+                div.switcher_container
+                    label(for=sw_id).mdl-switch.mdl-js-switch.mdl-js-ripple-effect
+                        input(id=sw_id, type='checkbox').mdl-switch__input
+                        span(id=sw_id + '_label').mdl-switch__label=sw_text
+
+mixin label(name, id, val, metric)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        p
+            span(id=id)=val
+            span=metric
+
+mixin canvas(name, id)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        canvas(id=id)
+
+//Рабочая установка
++ust('Эксперементальное получение ВАХ стабилитронов', 'exp1', './images/pic2.png', 'ustn_1', 'Включить установку')
+//Управление установкой и снятие показаний
+div.mdl-cell.mdl-cell--6-col
+    h5 Управление установкой
+    +range('Источник питания:', 'latr1', '0', '15', '0', '0.01', 'В')
+    +canvas('','latr_voltage1_cvs')
+    +switcher('Выбор стабилитрона', 'stabil_type1', 'Переключить на VD2')
+    +label('Текущий стабилитрон:', 'stabil_type1_now', 'VD1', '')
+    +switcher('Тип включения:', 'vkl_type1', 'Переключить на обратное')
+    +label('Текущее включение:', 'vkl_type1_now', 'Прямое', '')
+div.mdl-cell.mdl-cell--6-col
+    h5 Показания приборов
+    +label('Напряжение на стабилитроне', 'stabil_voltage1', '0', 'В')
+    +canvas('','stabil_voltage1_cvs')
+    +label('Напряжение на резисторе', 'resistor_voltage1', '0', 'В')
+    +canvas('','resistor_voltage1_cvs')
+
+

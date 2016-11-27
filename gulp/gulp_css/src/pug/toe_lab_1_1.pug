@@ -1,0 +1,49 @@
+mixin switcher(name, id, text)
+    div.section_text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        div.switcher_container
+            label(for=id).mdl-switch.mdl-js-switch.mdl-js-ripple-effect
+                input(id=id, type='checkbox').mdl-switch__input
+                span(id=id+'_label').mdl-switch__label=text
+
+mixin range(name, id, min, max, val, step, metric)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        div.range_container
+            input(id=id, type="range" min=min max=max value=val step=step data-metric=metric).mdl-slider.mdl-js-slider
+
+mixin ust(name, id, pic, sw_id,  sw_text)
+    div.pribor
+        h2(id=id)=name
+        div.big_pic
+            h5 Схема
+            img(src=pic alt="Схема")
+            div.mdl-card__actions.mdl-card--border
+                div.switcher_container
+                    label(for=sw_id).mdl-switch.mdl-js-switch.mdl-js-ripple-effect
+                        input(id=sw_id, type='checkbox').mdl-switch__input
+                        span(id=sw_id + '_label').mdl-switch__label=sw_text
+
+mixin label(name, id, val, metric)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5=name
+        p
+            span(id=id)=val+ ' ' +metric
+
+mixin multimeter(id)
+    div.section__text.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        canvas(id=id)
+
+
++ust('Эксперементальное получение прямой ветви ВАХ диода', 'exp1', './images/schem1.png', 'on_off', 'Включить установку')
+
+div.mdl-cell.mdl-cell--6-col
+    h5 Управление установкой
+    +range('Источник питания', 'pit_1', '0', '5', '0', '0.1', 'В')
+    +range('Потенциометр R1', 'rst', '0', '1000', '0', '1', 'Ом')
+    +label('\\(U_{прямое}\\), В', 'u1', '0', 'В')
+    +multimeter('voltmeter_1_canvas')
+    +label('\\(I_{прямое}\\), mA', 'a1', '0', 'mA')
+    +multimeter('ampermeter_1_canvas')
+
+
